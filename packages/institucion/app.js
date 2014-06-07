@@ -17,10 +17,24 @@ Institucion.register(function(app, auth, database) {
     Institucion.routes(app, auth, database);
 
     //We are adding a link to the main menu for all authenticated users
+    // Institucion.menus.add({
+    //     title: 'institucion example page',
+    //     link: 'institucion example page',
+    //     roles: ['authenticated'],
+    //     menu: 'main'
+    // });
+
     Institucion.menus.add({
-        title: 'institucion example page',
-        link: 'institucion example page',
-        roles: ['authenticated'],
+        title: 'Crear Institucion',
+        link: 'new institucion',
+        //roles: ['authenticated'],
+        menu: 'main'
+    });
+    
+    Institucion.menus.add({
+        title: 'Institucion',
+        link: 'list institucion',
+        //roles: ['authenticated'],
         menu: 'main'
     });
 
