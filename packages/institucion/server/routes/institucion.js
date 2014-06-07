@@ -1,26 +1,43 @@
 'use strict';
 
+var controller = require('../controllers/instituciones');
+
 // The Package is past automatically as first parameter
 module.exports = function(Institucion, app, auth, database) {
 
-    app.get('/institucion/example/anyone', function(req, res, next) {
-        res.send('Anyone can access this');
-    });
+     /*app.route('/articles/:articleId')
+        .get(articles.show)
+        .put(auth.requiresLogin, hasAuthorization, articles.update)
+        .delete(auth.requiresLogin, hasAuthorization, articles.destroy);*/
+        /*app.route('/articles')
+        .get(articles.all)
+        .post(auth.requiresLogin, articles.create);*/
 
-    app.get('/institucion/example/auth', auth.requiresLogin, function(req, res, next) {
-        res.send('Only authenticated users can access this');
-    });
-
-    app.get('/institucion/example/admin', auth.requiresAdmin, function(req, res, next) {
-        res.send('Only users with Admin role can access this');
-    });
-
-    app.get('/institucion/example/render', function(req, res, next) {
-        Institucion.render('index', {
-            package: 'institucion'
-        }, function(err, html) {
-            //Rendering a view from the Package server/views
-            res.send(html);
-        });
-    });
+    app.get('/institucion', controller.all);
+    app.post('/institucion', controller.create);
+    app.put('/institucion/:institucionId', controller.update);
+    app.delete('/institucion/:institucionId', controller.destroy);
+    app.get('/institucion/:institucionId', controller.show);
+    app.param('institucionId', controller.institucion);
 };
+
+
+
+/*
+'use strict';
+
+
+
+
+module.exports = function(Articles, app, auth) {
+
+    
+    app.route('/articles/:articleId')
+        .get(articles.show)
+        .put(auth.requiresLogin, hasAuthorization, articles.update)
+        .delete(auth.requiresLogin, hasAuthorization, articles.destroy);
+
+    // Finish with setting up the articleId param
+    app.param('articleId', articles.article);
+};
+*/
