@@ -64,6 +64,7 @@ angular.module('mean.institucion').controller('InstitucionController', ['$scope'
                 institucionId: $stateParams.institucionId
             }, function(institucion) {
                 $scope.institucion = institucion;
+                $scope.global.institucion = institucion;
             });
         };
     }

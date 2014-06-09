@@ -5,42 +5,21 @@
  */
 var Module = require('meanio').Module;
 
-var Institucion = new Module('institucion');
+var Example = new Module('example');
 
 /*
  * All MEAN packages require registration
  * Dependency injection is used to define required modules
  */
-Institucion.register(function(app, auth, database) {
+Example.register(function(app, auth, database) {
 
     //We enable routing. By default the Package Object is passed to the routes
-    Institucion.routes(app, auth, database);
+    Example.routes(app, auth, database);
 
     //We are adding a link to the main menu for all authenticated users
-    // Institucion.menus.add({
-    //     title: 'institucion example page',
-    //     link: 'institucion example page',
-    //     roles: ['authenticated'],
-    //     menu: 'main'
-    // });
-
-    Institucion.menus.add({
-        title: 'Crear Institucion',
-        link: 'new institucion',
-        roles: ['authenticated'],
-        menu: 'main'
-    });
-    
-    Institucion.menus.add({
-        title: 'Institucion',
-        link: 'list institucion',
-        roles: ['authenticated'],
-        menu: 'main'
-    });
-
-    Institucion.menus.add({
-        title: 'Attendace',
-        link: 'take list institucion',
+    Example.menus.add({
+        title: 'example example page',
+        link: 'example example page',
         roles: ['authenticated'],
         menu: 'main'
     });
@@ -49,7 +28,7 @@ Institucion.register(function(app, auth, database) {
     //Uncomment to use. Requires meanio@0.3.7 or above
     // Save settings with callback
     // Use this for saving data from administration pages
-    Institucion.settings({
+    Example.settings({
         'someSetting': 'some value'
     }, function(err, settings) {
         //you now have the settings object
@@ -57,15 +36,15 @@ Institucion.register(function(app, auth, database) {
 
     // Another save settings example this time with no callback
     // This writes over the last settings.
-    Institucion.settings({
+    Example.settings({
         'anotherSettings': 'some value'
     });
 
     // Get settings. Retrieves latest saved settigns
-    Institucion.settings(function(err, settings) {
+    Example.settings(function(err, settings) {
         //you now have the settings object
     });
     */
 
-    return Institucion;
+    return Example;
 });

@@ -39,5 +39,14 @@ angular.module('mean.institucion').config(['$stateProvider',
             url: '/institucion/:institucionId/edit',
             templateUrl: 'institucion/views/edit.html'
         });
+
+        $stateProvider.state('detail list institucion', {
+             url: '/institucion/:institucionId/detail',
+            templateUrl: 'institucion/views/viewDetail.html'
+        });
+        $stateProvider.state('take list institucion', {
+            url: '/institucion/list/detail',
+            templateUrl: 'institucion/views/listDetail.html'
+        });
     }
 ]);

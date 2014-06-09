@@ -8,8 +8,63 @@
     <a class="btn" data-ng-click="remove(institucion);">
         <i class="glyphicon glyphicon-trash"></i>
     </a>
-<!--     <div data-ng-if="hasAuthorization(article)">
-        
-    </div>
- --><!--     <div>{{article.content}}</div> -->
+    
+    <section ng-controller="EstudiantesController" data-ng-init="">
+    <h1>Estudiantes</h1>
+    <div ></div>
+    <input type="hidden" name="institucion" value='institucion'>
+    <button type="button" class="btn btn-default btn-lg" data-ng-click="find();">
+        Star
+    </button>
+    <br>
+    <br>
+    <br>
+       <!-- {{institucion}} -->
+<!--             <h2>{{institucion.title}}</h2> -->
+        <!-- <h2 ng-model="institucion:'val'">{{name}}</h2> -->
+        <ul class="list-group">
+            <span data-ng-repeat="estudiante in estudiantes">
+                <span data-ng-if="estaOk(estudiante)">
+                    <li class="list-group-item">
+                        <a data-ng-href="#!/estudiante/{{estudiante._id}}/institucion/{{institucion._id}}">
+                            {{estudiante.nombre}}
+                        </a>
+                        <a class="btn" data-ng-click="remove(estudiante);">
+                            <i class="glyphicon glyphicon-trash"></i>
+                        </a>
+                    </li>
+                </span>  
+            </span>
+        </ul>
+
+       
+        <form class="form-horizontal col-md-9" role="form" data-ng-submit="create()">
+            <div class="form-group">
+                <label mean-token="'create-nombre'" class="col-md-3 control-label">
+                    Nombre
+                </label>
+                <div class="col-md-9">
+                    <input type="text" class="form-control" data-ng-model="nombre" id="nombre" placeholder="Nombre" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <label mean-token="'create-email'" class="col-md-3 control-label">
+                    Email
+                </label>
+                <div class="col-md-9">
+                    <input type="text" class="form-control" data-ng-model="email" id="email" placeholder="Email" required>
+                </div>
+            </div>
+            <input type="hidden" name="institucion" value='institucion'>
+            <div class="form-group">
+                <div class="col-md-offset-3 col-md-9">
+                    <button type="submit" class="btn btn-info">Crear</button>
+                </div>
+            </div>
+        </form>
+        <!-- <h1 data-ng-hide="!articles || articles.length">No articles yet. <br> Why don't you <a href="/#!/articles/create">Create One</a>?</h1> -->
+    </section>
+
+
 </section>
+
