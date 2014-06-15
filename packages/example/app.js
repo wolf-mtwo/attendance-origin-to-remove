@@ -17,12 +17,12 @@ Example.register(function(app, auth, database) {
     Example.routes(app, auth, database);
 
     //We are adding a link to the main menu for all authenticated users
-    Example.menus.add({
-        title: 'example example page',
-        link: 'example example page',
-        roles: ['authenticated'],
-        menu: 'main'
-    });
+    // Example.menus.add({
+    //     title: 'example example page',
+    //     link: 'example example page',
+    //     roles: ['authenticated'],
+    //     menu: 'main'
+    // });
 
     /**
     //Uncomment to use. Requires meanio@0.3.7 or above

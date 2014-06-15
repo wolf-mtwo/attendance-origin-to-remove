@@ -40,11 +40,20 @@ Institucion.register(function(app, auth, database) {
 
     Institucion.menus.add({
         title: 'Attendace',
-        link: 'take list institucion',
+        link: 'generator institucion',
         roles: ['authenticated'],
         menu: 'main'
     });
 
+    Institucion.menus.add({
+        title: 'reporte',
+        link: 'index reporte',
+        roles: ['authenticated'],
+        menu: 'main'
+    });
+
+    //Institucion.aggregateAsset('js', 'doughnut.js');
+    //Institucion.aggregateAsset('js', 'tc-angular-chartjs.js');
     /**
     //Uncomment to use. Requires meanio@0.3.7 or above
     // Save settings with callback

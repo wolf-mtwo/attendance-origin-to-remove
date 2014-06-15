@@ -1,0 +1,15 @@
+<section data-ng-controller="ReporteController" data-ng-init="findestudiantes()">
+    
+	
+	<h2>{{institucion.title}} <strong>{{cantidad}}</strong></h2>
+    <ul class="list-group">
+        <li class="list-group-item" data-ng-repeat="estudiante in estudiantes" data-ng-click="update(estudiante)">
+            <span class="badge">{{estudiante.cantidad}}</span>
+            {{estudiante.nombre}}
+        </li>
+    </ul>
+            
+        
+    </div>
+</section>
+

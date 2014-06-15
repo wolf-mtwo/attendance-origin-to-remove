@@ -4,30 +4,17 @@
  * Module dependencies.
  */
 var mongoose = require('mongoose'),
-    CurrentModel = mongoose.model('Estudiante'),
+    CurrentModel = mongoose.model('Day'),
     Institucion = mongoose.model('Institucion'),
     _ = require('lodash');
     
 
 
-/**
- * Find article by id
- */
-exports.estudiante = function(req, res, next, id) {
+exports.day = function(req, res, next, id) {
     CurrentModel.load(id, function(err, item) {
         if (err) return next(err);
         if (!item) return next(new Error('Failed to load item ' + id));
-        req.estudiante = item;
-        next();
-    });
-};
-
-exports.institucion = function(req, res, next, id) {
-
-    Institucion.load(id, function(err, item) {
-        if (err) return next(err);
-        if (!item) return next(new Error('Failed to load item ' + id));
-        req.institucion = item;
+        req.day = item;
         next();
     });
 };
@@ -37,10 +24,7 @@ exports.institucion = function(req, res, next, id) {
  */
 exports.create = function(req, res) {
     var value = new CurrentModel(req.body);
-    //value.user = req.user;
-    //Institucion
     //res.jsonp({dddd: req.body.institucionId});
-
     Institucion.load(req.body.institucionId, function(err, item) {
         
         if (!item) return new Error('Failed to load item ' + req.body.institucionId);
@@ -49,7 +33,7 @@ exports.create = function(req, res) {
             if (err) {
                 return res.send('users/signup', {
                     errors: err.errors,
-                    estudiante: value
+                    day: value
                 });
             } else {
                 res.jsonp(value);
@@ -64,7 +48,7 @@ exports.create = function(req, res) {
  * Update an article
  */
 exports.update = function(req, res) {
-    var item = req.estudiante;
+    var item = req.day;
 
     item = _.extend(item, req.body);
 
@@ -72,7 +56,7 @@ exports.update = function(req, res) {
         if (err) {
             return res.send('users/signup', {
                 errors: err.errors,
-                estudiante: item
+                day: item
             });
         } else {
             res.jsonp(item);
@@ -85,7 +69,7 @@ exports.update = function(req, res) {
  */
 exports.destroy = function(req, res) {
     // var item = req.params;
-    var item = req.estudiante;
+    var item = req.day;
 
     // res.jsonp({item :  item,  hi:'hola'});
 
@@ -93,7 +77,7 @@ exports.destroy = function(req, res) {
         if (err) {
             return res.send('users/signup', {
                 errors: err.errors,
-                estudiante: item
+                day: item
             });
         } else {
             res.jsonp(item);
@@ -105,28 +89,11 @@ exports.destroy = function(req, res) {
 //  * Show an article
 //  */
 exports.show = function(req, res) {
-    res.jsonp(req.estudiante);
+    res.jsonp(req.day);
 };
 
 exports.all = function(req, res) {
-        CurrentModel.find().exec(function(err, items) {
-            if (err) {
-                res.render('error', {
-                    status: 500
-                });
-            } else {
-                res.jsonp(items);
-            }
-        });
-
-    //Article.find().sort('-created').populate('user', 'name username').exec(function(err, articles) {
-    
-};
-
-exports.allByInstitucion = function(req, res) {
-    
-    //req.params.name
-    CurrentModel.find({ institucion: req.institucion }).exec(function(err, items) {
+    CurrentModel.find().exec(function(err, items) {
         if (err) {
             res.render('error', {
                 status: 500

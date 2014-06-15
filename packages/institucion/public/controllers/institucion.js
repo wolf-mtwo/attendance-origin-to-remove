@@ -1,15 +1,11 @@
 'use strict';
 
-angular.module('mean.institucion').controller('InstitucionController', ['$scope', '$stateParams', '$location', 'Global', 'Institucion',
-    function($scope, $stateParams, $location, Global, Institucion) {
+angular.module('mean.institucion').controller('InstitucionController', ['$scope', '$http', '$stateParams', '$location', 'Global', 'Institucion', 'Estudiantes',
+    function($scope, $http, $stateParams, $location, Global, Institucion, Estudiantes) {
         $scope.global = Global;
-        /*$scope.package = {
-            name: 'institucion'
-        };*/
+        $scope.actuales = [];
 
         $scope.create = function() {
-            //console.log('createa');
-            //console.log('create2a');
             var value = new Institucion({
                 title: this.title,
                 content: this.content
@@ -19,6 +15,32 @@ angular.module('mean.institucion').controller('InstitucionController', ['$scope'
             });
 
             //this.title = '';
+        };
+
+        $scope.nana = function() {
+            console.log('sss');
+            //google.setOnLoadCallback(drawChart);
+              
+                
+            console.log('sss');
+        };
+
+        $scope.llamarlista = function() {
+            $http.post('/day', {
+                institucionId: $stateParams.institucionId
+            }).
+            success(function(data, status, headers, config) {
+                angular.forEach($scope.actuales, function(value, key) {
+                    console.log(value._id);
+                    $http.post('/horario', {
+                        estudianteId: value._id,
+                        dayId: data._id
+                    }).
+                    success(function(data, status, headers, config) {
+                        console.log(data);
+                    });
+                });
+            });
         };
 
         $scope.remove = function(item) {
@@ -51,8 +73,6 @@ angular.module('mean.institucion').controller('InstitucionController', ['$scope'
         };
 
         $scope.find = function() {
-            //console.log(Institucion);
-            //console.log('sdsd');
             Institucion.query(function(value) {
                  $scope.instituciones = value;
             });
@@ -63,8 +83,47 @@ angular.module('mean.institucion').controller('InstitucionController', ['$scope'
             Institucion.get({
                 institucionId: $stateParams.institucionId
             }, function(institucion) {
+                //$scope.global.institucion = institucion;
                 $scope.institucion = institucion;
-                $scope.global.institucion = institucion;
+            });
+        };
+
+        $scope.estaOk2 = function(estudiante) {
+            if (!estudiante || estudiante.institucion !== $scope.institucion._id) return false;
+            return estudiante;
+        };
+
+        $scope.presente = function(estudiante) {
+            $scope.actuales.push(estudiante);
+            for (var i in $scope.estudiantes) {
+                if ($scope.estudiantes[i] === estudiante) {
+                    $scope.estudiantes.splice(i, 1);
+                }
+            }
+            console.log('presente');
+        };
+
+        $scope.falta = function(estudiante) {
+            $scope.estudiantes.push(estudiante);
+            for (var i in $scope.actuales) {
+                if ($scope.actuales[i] === estudiante) {
+                    $scope.actuales.splice(i, 1);
+                }
+            }
+            console.log('falta');
+        };
+
+        $scope.findOneByestudents = function() {
+            Institucion.get({
+                institucionId: $stateParams.institucionId
+            }, function(institucion) {
+                //$scope.global.institucion = institucion;
+                $scope.institucion = institucion;
+
+
+                Estudiantes.query(function(value) {
+                     $scope.estudiantes = value;
+                });
             });
         };
     }

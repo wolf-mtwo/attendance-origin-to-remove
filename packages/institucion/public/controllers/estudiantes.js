@@ -4,8 +4,9 @@ angular.module('mean.institucion').controller('EstudiantesController', ['$scope'
     
 	function($scope, $attrs, $stateParams, $location, Global, Estudiantes) {
         //$scope.global = Global;
-       
+    
 
+   
         $scope.create = function() {
             var value = new Estudiantes({
                 nombre: this.nombre,
@@ -17,18 +18,13 @@ angular.module('mean.institucion').controller('EstudiantesController', ['$scope'
                 $scope.find();
                 //$location.path('institucion/' + $scope.institucion._id);
             });
-
-
-            //this.title = '';
         };
 
 
 		$scope.estaOk = function(estudiante) {
-			console.log(estudiante);
 			console.log($scope.institucion._id);
             if (!estudiante || estudiante.institucion !== $scope.institucion._id) return false;
             return estudiante;
-            /*return $scope.global.isAdmin || estudiante.user._id === $scope.global.user._id;*/
         };
         $scope.remove = function(estudiante) {
         	console.log(estudiante);
@@ -76,6 +72,14 @@ angular.module('mean.institucion').controller('EstudiantesController', ['$scope'
             // }, function(estudiantes) {
             //     $scope.estudiantes = estudiantes;
             // });
+        };
+
+        $scope.findbyinst = function() {
+            /*console.log($scope.institucion);
+            console.log($scope.global.institucion);*/
+            Estudiantes.query(function(value) {
+                 $scope.estudiantes = value;
+            });
         };
 
         $scope.findOne = function() {
