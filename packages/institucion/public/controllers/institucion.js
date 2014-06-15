@@ -13,16 +13,6 @@ angular.module('mean.institucion').controller('InstitucionController', ['$scope'
             value.$save(function(response) {
                 $location.path('institucion/' + response._id);
             });
-
-            //this.title = '';
-        };
-
-        $scope.nana = function() {
-            console.log('sss');
-            //google.setOnLoadCallback(drawChart);
-              
-                
-            console.log('sss');
         };
 
         $scope.llamarlista = function() {
@@ -31,13 +21,12 @@ angular.module('mean.institucion').controller('InstitucionController', ['$scope'
             }).
             success(function(data, status, headers, config) {
                 angular.forEach($scope.actuales, function(value, key) {
-                    console.log(value._id);
                     $http.post('/horario', {
                         estudianteId: value._id,
-                        dayId: data._id
-                    }).
-                    success(function(data, status, headers, config) {
-                        console.log(data);
+                        dayId: data._id,
+                        status: value.status
+                    }).success(function(data, status, headers, config) {
+                        $location.path('reporte/' + $stateParams.institucionId + '/tabla');
                     });
                 });
             });
@@ -54,7 +43,6 @@ angular.module('mean.institucion').controller('InstitucionController', ['$scope'
                 }
             } else {
                 $scope.item.$remove(function(response) {
-                    console.log('loco');
                     $location.path('institucion/list');
                 });
             }
@@ -66,7 +54,6 @@ angular.module('mean.institucion').controller('InstitucionController', ['$scope'
                 institucion.updated = [];
             }
             institucion.updated.push(new Date().getTime());
-
             institucion.$update(function() {
                 $location.path('institucion/' + institucion._id);
             });
@@ -77,7 +64,6 @@ angular.module('mean.institucion').controller('InstitucionController', ['$scope'
                  $scope.instituciones = value;
             });
         };
-
 
         $scope.findOne = function() {
             Institucion.get({
@@ -94,13 +80,35 @@ angular.module('mean.institucion').controller('InstitucionController', ['$scope'
         };
 
         $scope.presente = function(estudiante) {
-            $scope.actuales.push(estudiante);
             for (var i in $scope.estudiantes) {
                 if ($scope.estudiantes[i] === estudiante) {
                     $scope.estudiantes.splice(i, 1);
                 }
             }
-            console.log('presente');
+            estudiante.status = 'presente';
+            $scope.actuales.push(estudiante);
+        };
+
+        $scope.permiso = function(estudiante) {
+            for (var i in $scope.estudiantes) {
+                if ($scope.estudiantes[i] === estudiante) {
+                    $scope.estudiantes.splice(i, 1);
+                }
+            }
+            estudiante.status = 'permiso';
+            $scope.actuales.push(estudiante);
+            console.log('permiso');
+        };
+
+        $scope.fin = function(estudiante) {
+           for (var i in $scope.estudiantes) {
+                if ($scope.estudiantes[i] === estudiante) {
+                    $scope.estudiantes.splice(i, 1);
+                }
+            }
+            estudiante.status = 'fin';
+            $scope.estudiantes.push(estudiante);
+            console.log('fin');
         };
 
         $scope.falta = function(estudiante) {
@@ -113,14 +121,12 @@ angular.module('mean.institucion').controller('InstitucionController', ['$scope'
             console.log('falta');
         };
 
+        /* vista en detalle listo para llamar lista*/
         $scope.findOneByestudents = function() {
             Institucion.get({
                 institucionId: $stateParams.institucionId
             }, function(institucion) {
-                //$scope.global.institucion = institucion;
                 $scope.institucion = institucion;
-
-
                 Estudiantes.query(function(value) {
                      $scope.estudiantes = value;
                 });
@@ -128,33 +134,3 @@ angular.module('mean.institucion').controller('InstitucionController', ['$scope'
         };
     }
 ]);
-
-
-// 'use strict';
-
-// angular.module('mean').controller('InstitucionController', ['$scope', '$stateParams', '$location', 'Global', 'Institucion',
-//     function($scope, $stateParams, $location, Global, Institucion) {
-//         $scope.global = Global;
-
-//         // $scope.hasAuthorization = function(article) {
-//         //     if (!article || !article.user) return false;
-//         //     return $scope.global.isAdmin || article.user._id === $scope.global.user._id;
-//         // };
-
-
-
-//         $scope.update = function() {
-//             var article = $scope.article;
-//             if (!article.updated) {
-//                 article.updated = [];
-//             }
-//             article.updated.push(new Date().getTime());
-
-//             article.$update(function() {
-//                 $location.path('articles/' + article._id);
-//             });
-//         };
-
-
-//     }
-// ]);

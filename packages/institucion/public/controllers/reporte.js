@@ -28,11 +28,19 @@ angular.module('mean.institucion').controller('ReporteController', ['$scope', '$
         $scope.update = function(estudiante) {
             $http.post('/horario/estudiante', {
                 estudianteId: estudiante._id
-                //institucionId: $stateParams.institucionId
             }).success(function(data, status, headers, config) {
-                console.log(data);
-                //$scope.estudiantes = data;
                 estudiante.cantidad = data.length;
+                estudiante.presente = 0;
+                estudiante.permiso = 0;
+                angular.forEach(data, function(value, key) {
+                    if (value.status === 'presente') {
+                        estudiante.presente += 1;
+                    }
+                    if (value.status === 'permiso') {
+                        estudiante.permiso += 1;
+                    }
+                });
+                
             });
         };
 
@@ -40,10 +48,8 @@ angular.module('mean.institucion').controller('ReporteController', ['$scope', '$
             Institucion.get({
                 institucionId: $stateParams.institucionId
             }, function(data) {
-               
                 $scope.institucion = data;
             });
-
 
             $http.post('/horario/institucion', {
                 //estudianteId: estudiante._id
@@ -53,13 +59,10 @@ angular.module('mean.institucion').controller('ReporteController', ['$scope', '$
             });
 
             $http.get('/estudiante/' + $stateParams.institucionId + '/institucion').success(function(data, status, headers, config) {
-                console.log(data);
                 $scope.estudiantes = data;
-
                 angular.forEach(data, function(value, key) {
                     $scope.update(value);
                 });
-                
             });
         };
     }

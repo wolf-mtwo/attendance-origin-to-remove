@@ -15,6 +15,9 @@ var Schema = new Schema({
         type: Schema.ObjectId,
         ref: 'Day'
     },
+    status: {
+        type: String
+    },
     estudiante: {
         type: Schema.ObjectId,
         ref: 'Estudiante'

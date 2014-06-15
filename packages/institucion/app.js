@@ -52,6 +52,9 @@ Institucion.register(function(app, auth, database) {
         menu: 'main'
     });
 
+
+    Institucion.angularDependencies(['tc.chartjs']);
+    
     //Institucion.aggregateAsset('js', 'doughnut.js');
     //Institucion.aggregateAsset('js', 'tc-angular-chartjs.js');
     /**

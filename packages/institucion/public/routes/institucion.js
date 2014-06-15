@@ -2,6 +2,7 @@
 
 angular.module('mean.institucion').config(['$stateProvider',
     function($stateProvider) {
+
         $stateProvider.state('institucion example page', {
             url: '/institucion/example',
             templateUrl: 'institucion/views/index.html'
@@ -31,6 +32,7 @@ angular.module('mean.institucion').config(['$stateProvider',
             url: '/institucion/:institucionId',
             templateUrl: 'institucion/views/view.html'
         });
+
         $stateProvider.state('edit institucion', {
             url: '/institucion/:institucionId/edit',
             templateUrl: 'institucion/views/edit.html'
@@ -40,6 +42,5 @@ angular.module('mean.institucion').config(['$stateProvider',
              url: '/institucion/:institucionId/detail',
             templateUrl: 'institucion/views/viewdetail.html'
         });
-
     }
 ]);
