@@ -19,6 +19,16 @@ exports.day = function(req, res, next, id) {
     });
 };
 
+exports.institucion = function(req, res, next, id) {
+
+    Institucion.load(id, function(err, item) {
+        if (err) return next(err);
+        if (!item) return next(new Error('Failed to load item ' + id));
+        req.institucion = item;
+        next();
+    });
+};
+
 /**
  * Create an article
  */
@@ -94,6 +104,20 @@ exports.show = function(req, res) {
 
 exports.all = function(req, res) {
     CurrentModel.find().exec(function(err, items) {
+        if (err) {
+            res.render('error', {
+                status: 500
+            });
+        } else {
+            res.jsonp(items);
+        }
+    });
+};
+
+exports.allByInstitucion = function(req, res) {
+    
+    //req.params.name
+    CurrentModel.find({ institucion: req.institucion }).exec(function(err, items) {
         if (err) {
             res.render('error', {
                 status: 500

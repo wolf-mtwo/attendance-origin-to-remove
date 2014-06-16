@@ -152,3 +152,18 @@ exports.horinst = function(req, res) {
         }); 
     });
 };
+
+
+exports.horday = function(req, res) {
+    Day.load(req.body.dayId, function(err, item) {
+        CurrentModel.find({day : item }).exec(function(err, items) {
+            if (err) {
+                res.render('error', {
+                    status: 500
+                });
+            } else {
+                res.jsonp(items);
+            }
+        }); 
+    });
+};

@@ -5,7 +5,7 @@
             <span data-ng-repeat="estudiante in estudiantes">
                 <span data-ng-if="estaOk2(estudiante)">
                     <li class="list-group-item list-group-item-danger" data-ng-if="estudiante.status == 'fin'">
-                        <a href="">
+                        <a href="" data-ng-href="#!/institucion/{{institucion._id}}/detail/{{estudiante._id}}">
                             {{estudiante.nombre}}
                         </a>
                         <div style="float: right;margin-top:-7px;">
@@ -21,7 +21,7 @@
                         </div>
                     </li>
                     <li class="list-group-item" data-ng-if="estudiante.status != 'fin'">
-                        <a href="">
+                        <a href="" data-ng-href="#!/institucion/{{institucion._id}}/detail/{{estudiante._id}}">
                             {{estudiante.nombre}}
                         </a>
                         <div style="float: right;margin-top:-7px;">

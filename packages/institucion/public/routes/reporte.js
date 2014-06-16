@@ -12,5 +12,15 @@ angular.module('mean.institucion').config(['$stateProvider',
             url: '/reporte/:institucionId/tabla',
             templateUrl: 'institucion/views/reporte/tabla.html'
         });
+
+        $stateProvider.state('day reporte', {
+            url: '/day/:institucionId',
+            templateUrl: 'institucion/views/reporte/day.html'
+        });
+
+        $stateProvider.state('day report reporte', {
+            url: '/day/:institucionId/report/:dayId',
+            templateUrl: 'institucion/views/reporte/report.html'
+        });
     }
 ]);
