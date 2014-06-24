@@ -1,15 +1,11 @@
 'use strict';
 
-angular.module('mean.institucion').controller('InstitucionController', ['$scope', '$stateParams', '$location', 'Global', 'Institucion',
-    function($scope, $stateParams, $location, Global, Institucion) {
+angular.module('mean.institucion').controller('InstitucionController', ['$scope', '$http', '$stateParams', '$location', 'Global', 'Institucion', 'Estudiantes',
+    function($scope, $http, $stateParams, $location, Global, Institucion, Estudiantes) {
         $scope.global = Global;
-        /*$scope.package = {
-            name: 'institucion'
-        };*/
+        $scope.actuales = [];
 
         $scope.create = function() {
-            //console.log('createa');
-            //console.log('create2a');
             var value = new Institucion({
                 title: this.title,
                 content: this.content
@@ -17,8 +13,23 @@ angular.module('mean.institucion').controller('InstitucionController', ['$scope'
             value.$save(function(response) {
                 $location.path('institucion/' + response._id);
             });
+        };
 
-            //this.title = '';
+        $scope.llamarlista = function() {
+            $http.post('/day', {
+                institucionId: $stateParams.institucionId
+            }).
+            success(function(data, status, headers, config) {
+                angular.forEach($scope.actuales, function(value, key) {
+                    $http.post('/horario', {
+                        estudianteId: value._id,
+                        dayId: data._id,
+                        status: value.status
+                    }).success(function(data, status, headers, config) {
+                        $location.path('reporte/' + $stateParams.institucionId + '/tabla');
+                    });
+                });
+            });
         };
 
         $scope.remove = function(item) {
@@ -32,7 +43,6 @@ angular.module('mean.institucion').controller('InstitucionController', ['$scope'
                 }
             } else {
                 $scope.item.$remove(function(response) {
-                    console.log('loco');
                     $location.path('institucion/list');
                 });
             }
@@ -44,57 +54,83 @@ angular.module('mean.institucion').controller('InstitucionController', ['$scope'
                 institucion.updated = [];
             }
             institucion.updated.push(new Date().getTime());
-
             institucion.$update(function() {
                 $location.path('institucion/' + institucion._id);
             });
         };
 
         $scope.find = function() {
-            //console.log(Institucion);
-            //console.log('sdsd');
             Institucion.query(function(value) {
                  $scope.instituciones = value;
             });
         };
 
-
         $scope.findOne = function() {
             Institucion.get({
                 institucionId: $stateParams.institucionId
             }, function(institucion) {
+                //$scope.global.institucion = institucion;
                 $scope.institucion = institucion;
+            });
+        };
+
+        $scope.estaOk2 = function(estudiante) {
+            if (!estudiante || estudiante.institucion !== $scope.institucion._id) return false;
+            return estudiante;
+        };
+
+        $scope.presente = function(estudiante) {
+            for (var i in $scope.estudiantes) {
+                if ($scope.estudiantes[i] === estudiante) {
+                    $scope.estudiantes.splice(i, 1);
+                }
+            }
+            estudiante.status = 'presente';
+            $scope.actuales.push(estudiante);
+        };
+
+        $scope.permiso = function(estudiante) {
+            for (var i in $scope.estudiantes) {
+                if ($scope.estudiantes[i] === estudiante) {
+                    $scope.estudiantes.splice(i, 1);
+                }
+            }
+            estudiante.status = 'permiso';
+            $scope.actuales.push(estudiante);
+            console.log('permiso');
+        };
+
+        $scope.fin = function(estudiante) {
+           for (var i in $scope.estudiantes) {
+                if ($scope.estudiantes[i] === estudiante) {
+                    $scope.estudiantes.splice(i, 1);
+                }
+            }
+            estudiante.status = 'fin';
+            $scope.estudiantes.push(estudiante);
+            console.log('fin');
+        };
+
+        $scope.falta = function(estudiante) {
+            $scope.estudiantes.push(estudiante);
+            for (var i in $scope.actuales) {
+                if ($scope.actuales[i] === estudiante) {
+                    $scope.actuales.splice(i, 1);
+                }
+            }
+            console.log('falta');
+        };
+
+        /* vista en detalle listo para llamar lista*/
+        $scope.findOneByestudents = function() {
+            Institucion.get({
+                institucionId: $stateParams.institucionId
+            }, function(institucion) {
+                $scope.institucion = institucion;
+                Estudiantes.query(function(value) {
+                     $scope.estudiantes = value;
+                });
             });
         };
     }
 ]);
-
-
-// 'use strict';
-
-// angular.module('mean').controller('InstitucionController', ['$scope', '$stateParams', '$location', 'Global', 'Institucion',
-//     function($scope, $stateParams, $location, Global, Institucion) {
-//         $scope.global = Global;
-
-//         // $scope.hasAuthorization = function(article) {
-//         //     if (!article || !article.user) return false;
-//         //     return $scope.global.isAdmin || article.user._id === $scope.global.user._id;
-//         // };
-
-
-
-//         $scope.update = function() {
-//             var article = $scope.article;
-//             if (!article.updated) {
-//                 article.updated = [];
-//             }
-//             article.updated.push(new Date().getTime());
-
-//             article.$update(function() {
-//                 $location.path('articles/' + article._id);
-//             });
-//         };
-
-
-//     }
-// ]);

@@ -27,17 +27,36 @@ Institucion.register(function(app, auth, database) {
     Institucion.menus.add({
         title: 'Crear Institucion',
         link: 'new institucion',
-        //roles: ['authenticated'],
+        roles: ['authenticated'],
         menu: 'main'
     });
     
     Institucion.menus.add({
         title: 'Institucion',
         link: 'list institucion',
-        //roles: ['authenticated'],
+        roles: ['authenticated'],
         menu: 'main'
     });
 
+    Institucion.menus.add({
+        title: 'Attendace',
+        link: 'generator institucion',
+        roles: ['authenticated'],
+        menu: 'main'
+    });
+
+    Institucion.menus.add({
+        title: 'reporte',
+        link: 'index reporte',
+        roles: ['authenticated'],
+        menu: 'main'
+    });
+
+
+    Institucion.angularDependencies(['tc.chartjs']);
+    
+    //Institucion.aggregateAsset('js', 'doughnut.js');
+    //Institucion.aggregateAsset('js', 'tc-angular-chartjs.js');
     /**
     //Uncomment to use. Requires meanio@0.3.7 or above
     // Save settings with callback

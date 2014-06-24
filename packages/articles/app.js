@@ -16,17 +16,17 @@ Articles.register(function(app, auth, database) {
     //We enable routing. By default the Package Object is passed to the routes
     Articles.routes(app, auth, database);
 
-    //We are adding a link to the main menu for all authenticated users
-    Articles.menus.add({
-        'roles': ['authenticated'],
-        'title': 'Institucion',
-        'link': 'all articles'
-    });
-    Articles.menus.add({
-        'roles': ['authenticated'],
-        'title': 'Crear Nueva Institucion',
-        'link': 'create article'
-    });
+    // //We are adding a link to the main menu for all authenticated users
+    // Articles.menus.add({
+    //     'roles': ['authenticated'],
+    //     'title': 'Institucion',
+    //     'link': 'all articles'
+    // });
+    // Articles.menus.add({
+    //     'roles': ['authenticated'],
+    //     'title': 'Crear Nueva Institucion',
+    //     'link': 'create article'
+    // });
 
     /*
     //Uncomment to use. Requires meanio@0.3.7 or above
